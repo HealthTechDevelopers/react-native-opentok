@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.author       = package['author']
   s.homepage     = package['homepage']
   s.platform     = :ios, "7.0"
-  s.source       = { :git => "https://github.com/callstack/react-native-opentok.git", :tag => "master" }
+  s.source       = { :git => "https://github.com/HealthTechDevelopers/react-native-opentok.git", :tag => "master" }
   s.source_files  = "*.{h,m}"
   s.requires_arc = true
 
