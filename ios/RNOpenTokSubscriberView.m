@@ -26,11 +26,11 @@
     if (_subscriber == nil) {
         return;
     }
-    
+
     if ([changedProps containsObject:@"mute"]) {
         _subscriber.subscribeToAudio = !_mute;
     }
-    
+
     if ([changedProps containsObject:@"video"]) {
         _subscriber.subscribeToVideo = _video;
     }
@@ -53,22 +53,22 @@
     _subscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
     _subscriber.subscribeToAudio = !_mute;
     _subscriber.subscribeToVideo = _video;
-    
+
     OTError *error = nil;
     [_session subscribe:_subscriber error:&error];
-    
+
     if (error) {
         [self subscriber:_subscriber didFailWithError:error];
         return;
     }
-    
+
     [self attachSubscriberView];
 }
 
 - (void)unsubscribe {
     OTError *error = nil;
     [_session unsubscribe:_subscriber error:&error];
-    
+
     if (error) {
         NSLog(@"%@", error);
     }
@@ -93,11 +93,25 @@
     }
 }
 
+- (void)onStreamDestroyed:(NSNotification *)notification {
+    OTStream *stream = notification.userInfo[@"stream"];
+
+    if ([_subscriber.stream.streamId isEqualToString:stream.streamId]) {
+        [self cleanupSubscriber];
+    }
+}
+
 - (void)observeStream {
     [[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(onStreamCreated:)
      name:[@"stream-created:" stringByAppendingString:_sessionId]
+     object:nil];
+
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(onStreamDestroyed:)
+     name:[@"stream-destroyed:" stringByAppendingString:_sessionId]
      object:nil];
 }
 
@@ -105,6 +119,11 @@
     [[NSNotificationCenter defaultCenter]
      removeObserver:self
      name:[@"stream-created:" stringByAppendingString:_sessionId]
+     object:nil];
+
+    [[NSNotificationCenter defaultCenter]
+     removeObserver:self
+     name:[@"stream-destroyed:" stringByAppendingString:_sessionId]
      object:nil];
 }
 
@@ -138,3 +157,4 @@
 }
 
 @end
+
