@@ -81,6 +81,7 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
 
     public void onStreamDropped(Session session, Stream stream) {
         sendEvent(Events.EVENT_SUBSCRIBE_STOP, Arguments.createMap());
+        cleanUpSubscriber();
     }
 
     /** Subscribe listener **/
