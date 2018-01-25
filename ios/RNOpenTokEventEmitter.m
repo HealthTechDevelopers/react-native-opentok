@@ -18,7 +18,9 @@ RCT_EXPORT_MODULE();
              @"onSubscribeError",
              @"onPublishStart",
              @"onPublishStop",
-             @"onPublishError"];
+             @"onPublishError",
+             @"onVideoEnabled",
+             @"onVideoDisabled"];
 }
 
 - (void)startObserving {

@@ -136,6 +136,8 @@ Constants for events thrown in app. Available values:
 - *ON_SESSION_DID_FAIL_WITH_ERROR*
 - *ON_SESSION_STREAM_CREATED*
 - *ON_SESSION_STREAM_DESTROYED*
+- *ON_VIDEO_ENABLED*
+- *ON_VIDEO_DISABLED*
 
 #### on(name: string, callback: Function)
 Event listener, for events listed above.
