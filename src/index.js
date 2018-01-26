@@ -64,6 +64,8 @@ export default {
     ON_SESSION_DID_FAIL_WITH_ERROR: 'onSessionDidFailWithError',
     ON_SESSION_STREAM_CREATED: 'onSessionStreamCreated',
     ON_SESSION_STREAM_DESTROYED: 'onSessionStreamDestroyed',
+    ON_VIDEO_ENABLED: 'onVideoEnabled',
+    ON_VIDEO_DISABLED: 'onVideoDisabled'
   },
 
   connect: (sessionId: string, token: string): Promise<boolean | Error> =>
