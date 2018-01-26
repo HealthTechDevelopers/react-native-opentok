@@ -82,8 +82,10 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
     }
 
     private void cleanUpSubscriber() {
-        removeView(mSubscriber.getView());
-        mSubscriber = null;
+        if( mSubscriber != null) {
+            removeView(mSubscriber.getView());
+            mSubscriber = null;
+        }
     }
 
     public void onStreamReceived(Session session, Stream stream) {
