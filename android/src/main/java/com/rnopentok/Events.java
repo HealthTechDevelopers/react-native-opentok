@@ -14,16 +14,19 @@ enum Events {
     ON_SESSION_DID_DISCONNECT("onSessionDidDisconnect"),
     ON_SESSION_DID_FAIL_WITH_ERROR("onSessionDidFailWithError"),
     ON_SESSION_STREAM_CREATED("onSessionStreamCreated"),
-    ON_SESSION_STREAM_DESTROYED("onSessionStreamDestroyed");
+    ON_SESSION_STREAM_DESTROYED("onSessionStreamDestroyed"),
+    ON_VIDEO_ENABLED("onVideoEnabled"),
+    ON_VIDEO_DISABLED("onVideoDisabled");
+
 
     private final String mName;
 
     Events(final String name) {
-        mName = name;
+      mName = name;
     }
 
     @Override
     public String toString() {
-        return mName;
+       return mName;
     }
 }

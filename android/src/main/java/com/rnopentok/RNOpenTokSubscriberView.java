@@ -38,7 +38,21 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
             mSubscriber.setSubscribeToVideo(enabled);
         }
 
+        if(enabled) {
+            onVideoEnabled();
+        } else {
+            onVideoDisabled();
+        }
+
         mVideoEnabled = enabled;
+    }
+
+    public void onVideoEnabled(){
+        sendEvent(Events.ON_VIDEO_ENABLED, Arguments.createMap());
+    }
+
+    public void onVideoDisabled(){
+        sendEvent(Events.ON_VIDEO_DISABLED, Arguments.createMap());
     }
 
     @Override
