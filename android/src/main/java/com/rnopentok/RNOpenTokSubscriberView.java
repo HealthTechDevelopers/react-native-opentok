@@ -79,12 +79,14 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
     private void attachSubscriberView() {
         addView(mSubscriber.getView(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         requestLayout();
+        onVideoEnabled();
     }
 
     private void cleanUpSubscriber() {
         if( mSubscriber != null) {
             removeView(mSubscriber.getView());
             mSubscriber = null;
+            onVideoDisabled();
         }
     }
 
