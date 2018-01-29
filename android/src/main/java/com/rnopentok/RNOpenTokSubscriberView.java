@@ -73,6 +73,32 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
         Session session = RNOpenTokSessionManager.getSessionManager().getSession(mSessionId);
         session.subscribe(mSubscriber);
 
+        session.setStreamPropertiesListener(new Session.StreamPropertiesListener() {
+            @Override
+            public void onStreamHasAudioChanged(Session session, Stream stream, boolean b) {
+
+            }
+
+            @Override
+            public void onStreamHasVideoChanged(Session session, Stream stream, boolean b) {
+                if(b) {
+                    onVideoEnabled();
+                } else {
+                    onVideoDisabled();
+                }
+            }
+
+            @Override
+            public void onStreamVideoDimensionsChanged(Session session, Stream stream, int i, int i1) {
+
+            }
+
+            @Override
+            public void onStreamVideoTypeChanged(Session session, Stream stream, Stream.StreamVideoType streamVideoType) {
+
+            }
+        });
+
         attachSubscriberView();
     }
 
