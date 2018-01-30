@@ -64,6 +64,7 @@ export default {
     ON_SESSION_DID_FAIL_WITH_ERROR: 'onSessionDidFailWithError',
     ON_SESSION_STREAM_CREATED: 'onSessionStreamCreated',
     ON_SESSION_STREAM_DESTROYED: 'onSessionStreamDestroyed',
+    EVENT_PUBLISH_START: 'onPublishStart',
     ON_VIDEO_ENABLED: 'onVideoEnabled',
     ON_VIDEO_DISABLED: 'onVideoDisabled'
   },
