@@ -68,6 +68,9 @@ export default {
     ON_ARCHIVE_STOPPED_WITH_ID: 'onArchiveStoppedWithId',
     ON_SESSION_DID_BEGIN_RECONNECTING: 'onSessionDidBeginReconnecting',
     ON_SESSION_DID_RECONNECT: 'onSessionDidReconnect',
+    ON_VIDEO_ENABLED: 'onVideoEnabled',
+    ON_VIDEO_DISABLED: 'onVideoDisabled'
+
   },
 
   connect: (sessionId: string, token: string): Promise<boolean | Error> =>

@@ -23,6 +23,8 @@ RCT_EXPORT_MODULE();
              @"onArchiveStoppedWithId",
              @"onSessionDidBeginReconnecting",
              @"onSessionDidReconnect"];
+             @"onVideoEnabled",
+             @"onVideoDisabled"];
 }
 
 - (void)startObserving {

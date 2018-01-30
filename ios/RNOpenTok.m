@@ -25,9 +25,9 @@ RCT_EXPORT_METHOD(disconnectAll) {
 RCT_EXPORT_METHOD(sendSignal:(NSString *)sessionId type:(NSString *)type data:(NSString *)data resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
     OTSession *session = [[RNOpenTokSessionManager sessionManager] getSession:sessionId];
     OTError* error = nil;
-    
+
     [session signalWithType:type string:data connection:nil error:&error];
-    
+
     if (!session || error) {
         reject(@"not_sent", @"Signal wasn't sent", error);
     } else {
@@ -67,6 +67,11 @@ RCT_EXPORT_METHOD(sendSignal:(NSString *)sessionId type:(NSString *)type data:(N
 }
 
 - (void)session:(OTSession*)session streamDestroyed:(OTStream *)stream {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:[@"stream-destroyed:" stringByAppendingString:session.sessionId]
+     object:nil
+     userInfo:@{@"stream":stream}];
+
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onSessionStreamDestroyed"
      object:nil
@@ -130,3 +135,4 @@ RCT_EXPORT_METHOD(sendSignal:(NSString *)sessionId type:(NSString *)type data:(N
 }
 
 @end
+

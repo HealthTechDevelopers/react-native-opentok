@@ -1,9 +1,9 @@
 {
-  "name": "react-native-opentok",
-  "version": "2.0.1",
-  "description": "React Native OpenTok",
-  "author": "Callstack <mobile-dev@callstack.com>",
-  "homepage": "http://callstack.com",
+  "name": "react-native-opentok-htd",
+  "version": "2.0.4",
+  "description": "React Native OpenTok fork",
+  "author": "Aleksander Maj <aleksander.maj@htdevelopers.com>",
+  "homepage": "https://github.com/HealthTechDevelopers/react-native-opentok",
   "main": "src/index.js",
   "license": "MIT",
   "scripts": {

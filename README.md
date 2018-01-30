@@ -1,4 +1,4 @@
-# react-native-opentok
+# react-native-opentok-htd
 [![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors)
 
 <a title="Join on Slack" href="https://slack.callstack.io/"><img src="https://slack.callstack.io/badge.svg" /></a>
@@ -25,7 +25,7 @@ React native OpenTok SDK depends on native OpenTok SDK implementations. You need
 Add library using `yarn` 📦 (or `npm`):
 
 ```bash
-yarn add react-native-opentok
+yarn add react-native-opentok-htd
 ```
 
 ### iOS
@@ -44,7 +44,7 @@ target '<YOUR_PROJECT_NAME>' do
   pod 'yoga', path: "#{node_modules_path}/react-native/ReactCommon/yoga/yoga.podspec"
   pod 'React', path: "#{node_modules_path}/react-native"
 
-  pod 'RNOpenTok', path: "#{node_modules_path}/react-native-opentok/ios"
+  pod 'RNOpenTok', path: "#{node_modules_path}/react-native-opentok-htd/ios"
 end
 
 post_install do |installer|
@@ -136,6 +136,8 @@ Constants for events thrown in app. Available values:
 - *ON_SESSION_DID_FAIL_WITH_ERROR*
 - *ON_SESSION_STREAM_CREATED*
 - *ON_SESSION_STREAM_DESTROYED*
+- *ON_VIDEO_ENABLED*
+- *ON_VIDEO_DISABLED*
 
 #### on(name: string, callback: Function)
 Event listener, for events listed above.

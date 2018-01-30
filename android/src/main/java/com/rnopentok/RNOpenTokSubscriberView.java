@@ -38,7 +38,21 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
             mSubscriber.setSubscribeToVideo(enabled);
         }
 
+        if(enabled) {
+            onVideoEnabled();
+        } else {
+            onVideoDisabled();
+        }
+
         mVideoEnabled = enabled;
+    }
+
+    public void onVideoEnabled(){
+        sendEvent(Events.ON_VIDEO_ENABLED, Arguments.createMap());
+    }
+
+    public void onVideoDisabled(){
+        sendEvent(Events.ON_VIDEO_DISABLED, Arguments.createMap());
     }
 
     @Override
@@ -59,17 +73,47 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
         Session session = RNOpenTokSessionManager.getSessionManager().getSession(mSessionId);
         session.subscribe(mSubscriber);
 
+        session.setStreamPropertiesListener(new Session.StreamPropertiesListener() {
+            @Override
+            public void onStreamHasAudioChanged(Session session, Stream stream, boolean b) {
+
+            }
+
+            @Override
+            public void onStreamHasVideoChanged(Session session, Stream stream, boolean b) {
+                if(b) {
+                    onVideoEnabled();
+                } else {
+                    onVideoDisabled();
+                }
+            }
+
+            @Override
+            public void onStreamVideoDimensionsChanged(Session session, Stream stream, int i, int i1) {
+
+            }
+
+            @Override
+            public void onStreamVideoTypeChanged(Session session, Stream stream, Stream.StreamVideoType streamVideoType) {
+
+            }
+        });
+
         attachSubscriberView();
     }
 
     private void attachSubscriberView() {
         addView(mSubscriber.getView(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         requestLayout();
+        onVideoEnabled();
     }
 
     private void cleanUpSubscriber() {
-        removeView(mSubscriber.getView());
-        mSubscriber = null;
+        if( mSubscriber != null) {
+            removeView(mSubscriber.getView());
+            mSubscriber = null;
+            onVideoDisabled();
+        }
     }
 
     public void onStreamReceived(Session session, Stream stream) {
@@ -81,6 +125,7 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
 
     public void onStreamDropped(Session session, Stream stream) {
         sendEvent(Events.EVENT_SUBSCRIBE_STOP, Arguments.createMap());
+        cleanUpSubscriber();
     }
 
     /** Subscribe listener **/
