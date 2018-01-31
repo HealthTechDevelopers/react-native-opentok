@@ -1,5 +1,7 @@
 package com.rnopentok;
 
+import android.view.SurfaceView;
+
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
@@ -70,6 +72,13 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
 
     private void attachPublisherView() {
         addView(mPublisher.getView(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+       try {
+            if (mPublisher.getView() instanceof SurfaceView) {
+                ((SurfaceView) mPublisher.getView()).setZOrderOnTop(true);
+            }
+       } catch(Exception e){
+           e.printStackTrace();
+       }
         requestLayout();
     }
 
