@@ -22,7 +22,7 @@ RCT_EXPORT_MODULE();
              @"onArchiveStartedWithId",
              @"onArchiveStoppedWithId",
              @"onSessionDidBeginReconnecting",
-             @"onSessionDidReconnect"];
+             @"onSessionDidReconnect",
              @"onVideoEnabled",
              @"onVideoDisabled"];
 }
