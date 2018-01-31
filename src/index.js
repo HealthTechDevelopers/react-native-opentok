@@ -70,7 +70,9 @@ export default {
     ON_SESSION_DID_RECONNECT: 'onSessionDidReconnect',
     ON_VIDEO_ENABLED: 'onVideoEnabled',
     ON_VIDEO_DISABLED: 'onVideoDisabled',
-    EVENT_PUBLISH_START: 'onPublishStart'
+    EVENT_PUBLISH_START: 'onPublishStart',
+    EVENT_PUBLISH_CAMERA_ERROR: 'onPublishCameraError',
+    ON_VIDEO_DATA_RECEIVED: 'onVideoDataReceived'
   },
 
   connect: (sessionId: string, token: string): Promise<boolean | Error> =>
