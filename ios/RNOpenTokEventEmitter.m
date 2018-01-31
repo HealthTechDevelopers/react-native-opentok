@@ -19,6 +19,10 @@ RCT_EXPORT_MODULE();
              @"onPublishStart",
              @"onPublishStop",
              @"onPublishError",
+             @"onArchiveStartedWithId",
+             @"onArchiveStoppedWithId",
+             @"onSessionDidBeginReconnecting",
+             @"onSessionDidReconnect"];
              @"onVideoEnabled",
              @"onVideoDisabled"];
 }

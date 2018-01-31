@@ -64,6 +64,10 @@ export default {
     ON_SESSION_DID_FAIL_WITH_ERROR: 'onSessionDidFailWithError',
     ON_SESSION_STREAM_CREATED: 'onSessionStreamCreated',
     ON_SESSION_STREAM_DESTROYED: 'onSessionStreamDestroyed',
+    ON_ARCHIVE_STARTED_WITH_ID: 'onArchiveStartedWithId',
+    ON_ARCHIVE_STOPPED_WITH_ID: 'onArchiveStoppedWithId',
+    ON_SESSION_DID_BEGIN_RECONNECTING: 'onSessionDidBeginReconnecting',
+    ON_SESSION_DID_RECONNECT: 'onSessionDidReconnect',
     ON_VIDEO_ENABLED: 'onVideoEnabled',
     ON_VIDEO_DISABLED: 'onVideoDisabled',
     EVENT_PUBLISH_START: 'onPublishStart'
