@@ -20,7 +20,9 @@ enum Events {
     ON_SESSION_STREAM_CREATED("onSessionStreamCreated"),
     ON_SESSION_STREAM_DESTROYED("onSessionStreamDestroyed"),
     ON_VIDEO_ENABLED("onVideoEnabled"),
-    ON_VIDEO_DISABLED("onVideoDisabled");
+    ON_VIDEO_DISABLED("onVideoDisabled"),
+    ON_VIDEO_DATA_RECEIVED("onVideoDataReceived"),
+    EVENT_PUBLISH_CAMERA_ERROR("onPublishCameraError");
 
 
 

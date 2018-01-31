@@ -11,7 +11,7 @@ import com.opentok.android.Stream;
 import com.opentok.android.Subscriber;
 import com.opentok.android.SubscriberKit;
 
-public class RNOpenTokSubscriberView extends RNOpenTokView implements SubscriberKit.SubscriberListener, SubscriberKit.VideoListener {
+public class RNOpenTokSubscriberView extends RNOpenTokView implements SubscriberKit.SubscriberListener, SubscriberKit.VideoListener, SubscriberKit.StreamListener {
     private Subscriber mSubscriber;
     private Boolean mAudioEnabled;
     private Boolean mVideoEnabled;
@@ -58,8 +58,11 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
 
     private void startSubscribing(Stream stream) {
         mSubscriber = new Subscriber(getContext(), stream);
+
         mSubscriber.setSubscriberListener(this);
         mSubscriber.setVideoListener(this);
+        mSubscriber.setStreamListener(this);
+
         mSubscriber.setSubscribeToAudio(mAudioEnabled);
         mSubscriber.setSubscribeToVideo(mVideoEnabled);
 
@@ -104,41 +107,54 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
         if( mSubscriber != null) {
             removeView(mSubscriber.getView());
             mSubscriber = null;
-//            onVideoDisabled();
         }
     }
 
     public void onStreamReceived(Session session, Stream stream) {
         if (mSubscriber == null) {
             startSubscribing(stream);
-            sendEvent(Events.EVENT_SUBSCRIBE_START, Arguments.createMap());
+//            sendEvent(Events.EVENT_SUBSCRIBE_START, Arguments.createMap());
         }
     }
 
     public void onStreamDropped(Session session, Stream stream) {
-        sendEvent(Events.EVENT_SUBSCRIBE_STOP, Arguments.createMap());
-         cleanUpSubscriber();
+//        sendEvent(Events.EVENT_SUBSCRIBE_STOP, Arguments.createMap());
+//         cleanUpSubscriber();
     }
 
     /** Subscribe listener **/
 
     @Override
-    public void onConnected(SubscriberKit subscriberKit) {}
+    public void onConnected(SubscriberKit subscriberKit) {
+        sendEvent(Events.EVENT_SUBSCRIBE_START, Arguments.createMap());
+    }
 
     @Override
-    public void onDisconnected(SubscriberKit subscriberKit) {}
+    public void onReconnected(SubscriberKit subscriberKit) {
+
+    }
+
+    @Override
+    public void onDisconnected(SubscriberKit subscriberKit) {
+        sendEvent(Events.EVENT_SUBSCRIBE_STOP, Arguments.createMap());
+        cleanUpSubscriber();
+    }
 
     @Override
     public void onError(SubscriberKit subscriberKit, OpentokError opentokError) {
-        WritableMap payload = Arguments.createMap();
+                                                    WritableMap payload = Arguments.createMap();
         payload.putString("connectionId", opentokError.toString());
 
         sendEvent(Events.EVENT_SUBSCRIBE_ERROR, payload);
+
+//        Check it
+        cleanUpSubscriber();
+
     }
 
     @Override
     public void onVideoDataReceived(SubscriberKit subscriberKit) {
-
+        sendEvent(Events.ON_VIDEO_ENABLED, Arguments.createMap());
     }
 
     @Override

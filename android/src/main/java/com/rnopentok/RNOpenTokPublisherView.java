@@ -5,11 +5,12 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.opentok.android.OpentokError;
 import com.opentok.android.Session;
+import com.opentok.android.BaseVideoRenderer;
 import com.opentok.android.Stream;
 import com.opentok.android.Publisher;
 import com.opentok.android.PublisherKit;
 
-public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKit.PublisherListener {
+public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKit.PublisherListener, Publisher.CameraListener {
     private Publisher mPublisher;
     private Boolean mAudioEnabled;
     private Boolean mVideoEnabled;
@@ -55,9 +56,11 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
     private void startPublishing() {
         mPublisher = new Publisher(getContext());
         mPublisher.setPublisherListener(this);
+        mPublisher.setCameraListener(this);
 
         mPublisher.setPublishAudio(mAudioEnabled);
         mPublisher.setPublishVideo(mVideoEnabled);
+        mPublisher.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE, BaseVideoRenderer.STYLE_VIDEO_FILL);
 
         Session session = RNOpenTokSessionManager.getSessionManager().getSession(mSessionId);
         session.publish(mPublisher);
@@ -71,9 +74,11 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
     }
 
     private void cleanUpPublisher() {
-        removeView(mPublisher.getView());
-        mPublisher.destroy();
-        mPublisher = null;
+        if( mPublisher != null) {
+            removeView(mPublisher.getView());
+            mPublisher.destroy();
+            mPublisher = null;
+        }
     }
 
     public void onConnected(Session session) {
@@ -90,7 +95,6 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
     @Override
     public void onStreamDestroyed(PublisherKit publisherKit, Stream stream) {
         sendEvent(Events.EVENT_PUBLISH_STOP, Arguments.createMap());
-        // cleanUpPublisher();
     }
 
     @Override
@@ -98,7 +102,21 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
         WritableMap payload = Arguments.createMap();
         payload.putString("connectionId", opentokError.toString());
 
+//        check it
+        cleanUpPublisher();
+
         sendEvent(Events.EVENT_PUBLISH_ERROR, payload);
-        // cleanUpPublisher();
+    }
+
+    @Override
+    public void onCameraChanged(Publisher publisher, int i) {
+
+    }
+
+    @Override
+    public void onCameraError(Publisher publisher, OpentokError opentokError) {
+        //        check it
+        cleanUpPublisher();
+        sendEvent(Events.EVENT_PUBLISH_CAMERA_ERROR, Arguments.createMap());
     }
 }
