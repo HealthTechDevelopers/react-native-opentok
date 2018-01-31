@@ -163,6 +163,13 @@
      userInfo:@{@"sessionId": _sessionId, @"reason": @(reason)}];
 }
 
+- (void)subscriberVideoDataReceived:(OTSubscriber *)subscriber reason:(OTSubscriberVideoEventReason)reason {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onVideoEnabled"
+     object:nil
+     userInfo:@{@"sessionId": _sessionId, @"reason": @(reason)}];
+}
+
 - (void)subscriberVideoDisabled:(OTSubscriberKit *)subscriber reason:(OTSubscriberVideoEventReason)reason {
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onVideoDisabled"
