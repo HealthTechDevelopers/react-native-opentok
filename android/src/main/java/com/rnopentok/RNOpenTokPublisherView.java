@@ -90,7 +90,7 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
     @Override
     public void onStreamDestroyed(PublisherKit publisherKit, Stream stream) {
         sendEvent(Events.EVENT_PUBLISH_STOP, Arguments.createMap());
-        cleanUpPublisher();
+        // cleanUpPublisher();
     }
 
     @Override
@@ -99,6 +99,6 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
         payload.putString("connectionId", opentokError.toString());
 
         sendEvent(Events.EVENT_PUBLISH_ERROR, payload);
-        cleanUpPublisher();
+        // cleanUpPublisher();
     }
 }

@@ -2,6 +2,7 @@ package com.rnopentok;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.opentok.android.BaseVideoRenderer;
 import com.opentok.android.OpentokError;
@@ -10,7 +11,7 @@ import com.opentok.android.Stream;
 import com.opentok.android.Subscriber;
 import com.opentok.android.SubscriberKit;
 
-public class RNOpenTokSubscriberView extends RNOpenTokView implements SubscriberKit.SubscriberListener {
+public class RNOpenTokSubscriberView extends RNOpenTokView implements SubscriberKit.SubscriberListener, SubscriberKit.VideoListener {
     private Subscriber mSubscriber;
     private Boolean mAudioEnabled;
     private Boolean mVideoEnabled;
@@ -38,21 +39,15 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
             mSubscriber.setSubscribeToVideo(enabled);
         }
 
-        if(enabled) {
-            onVideoEnabled();
-        } else {
-            onVideoDisabled();
-        }
-
         mVideoEnabled = enabled;
     }
 
-    public void onVideoEnabled(){
-        sendEvent(Events.ON_VIDEO_ENABLED, Arguments.createMap());
+    public void onVideoEnabled(WritableMap payload){
+        sendEvent(Events.ON_VIDEO_ENABLED, payload);
     }
 
-    public void onVideoDisabled(){
-        sendEvent(Events.ON_VIDEO_DISABLED, Arguments.createMap());
+    public void onVideoDisabled(WritableMap payload){
+        sendEvent(Events.ON_VIDEO_DISABLED, payload);
     }
 
     @Override
@@ -64,6 +59,7 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
     private void startSubscribing(Stream stream) {
         mSubscriber = new Subscriber(getContext(), stream);
         mSubscriber.setSubscriberListener(this);
+        mSubscriber.setVideoListener(this);
         mSubscriber.setSubscribeToAudio(mAudioEnabled);
         mSubscriber.setSubscribeToVideo(mVideoEnabled);
 
@@ -81,11 +77,7 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
 
             @Override
             public void onStreamHasVideoChanged(Session session, Stream stream, boolean b) {
-                if(b) {
-                    onVideoEnabled();
-                } else {
-                    onVideoDisabled();
-                }
+
             }
 
             @Override
@@ -105,14 +97,14 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
     private void attachSubscriberView() {
         addView(mSubscriber.getView(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         requestLayout();
-        onVideoEnabled();
+//        onVideoEnabled();
     }
 
     private void cleanUpSubscriber() {
         if( mSubscriber != null) {
             removeView(mSubscriber.getView());
             mSubscriber = null;
-            onVideoDisabled();
+//            onVideoDisabled();
         }
     }
 
@@ -125,7 +117,7 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
 
     public void onStreamDropped(Session session, Stream stream) {
         sendEvent(Events.EVENT_SUBSCRIBE_STOP, Arguments.createMap());
-        cleanUpSubscriber();
+         cleanUpSubscriber();
     }
 
     /** Subscribe listener **/
@@ -144,4 +136,28 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
         sendEvent(Events.EVENT_SUBSCRIBE_ERROR, payload);
     }
 
+    @Override
+    public void onVideoDataReceived(SubscriberKit subscriberKit) {
+
+    }
+
+    @Override
+    public void onVideoDisabled(SubscriberKit subscriberKit, String s) {
+        sendEvent(Events.ON_VIDEO_DISABLED, Arguments.createMap());
+    }
+
+    @Override
+    public void onVideoEnabled(SubscriberKit subscriberKit, String s) {
+        sendEvent(Events.ON_VIDEO_ENABLED, Arguments.createMap());
+    }
+
+    @Override
+    public void onVideoDisableWarning(SubscriberKit subscriberKit) {
+
+    }
+
+    @Override
+    public void onVideoDisableWarningLifted(SubscriberKit subscriberKit) {
+
+    }
 }

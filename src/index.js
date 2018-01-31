@@ -69,8 +69,9 @@ export default {
     ON_SESSION_DID_BEGIN_RECONNECTING: 'onSessionDidBeginReconnecting',
     ON_SESSION_DID_RECONNECT: 'onSessionDidReconnect',
     ON_VIDEO_ENABLED: 'onVideoEnabled',
-    ON_VIDEO_DISABLED: 'onVideoDisabled'
-
+    ON_VIDEO_DISABLED: 'onVideoDisabled',
+    ON_VIDEO_DISABLED: 'onVideoDisabled',
+    EVENT_PUBLISH_START: 'onPublishStart'
   },
 
   connect: (sessionId: string, token: string): Promise<boolean | Error> =>
