@@ -6,9 +6,6 @@
 
 @implementation RNOpenTokSubscriberView {
     OTSubscriber *_subscriber;
-    Boolean _wasVideoDisabled;
-    Boolean _subscriberVideoOn;
-    
 }
 
 @synthesize sessionId = _sessionId;
@@ -53,12 +50,10 @@
 
 - (void)doSubscribe:(OTStream*)stream {
     [self unsubscribe];
-    _wasVideoDisabled = false;
-    _subscriberVideoOn = false;
     _subscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
     _subscriber.subscribeToAudio = !_mute;
     _subscriber.subscribeToVideo = _video;
-    
+
 
     OTError *error = nil;
     [_session subscribe:_subscriber error:&error];
@@ -163,45 +158,17 @@
 }
 
 - (void)subscriberVideoEnabled:(OTSubscriberKit *)subscriber reason:(OTSubscriberVideoEventReason)reason {
-    NSLog(@"DEBUG INFO: subscriberVideoEnabled :%i", reason);
-    
-    if (reason == OTSubscriberVideoEventPublisherPropertyChanged) {
-        _wasVideoDisabled = false;
-        _subscriberVideoOn = true;
-        
-        [[NSNotificationCenter defaultCenter]
-         postNotificationName:@"onVideoEnabled"
-         object:nil
-         userInfo:@{@"sessionId": _sessionId}];
-    }
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onVideoEnabled"
+     object:nil
+     userInfo:@{@"sessionId": _sessionId}];
 }
-- (void)subscriberVideoDataReceived:(OTSubscriber*)subscriber {
-    NSLog(@"DEBUG INFO: subscriberVideoDataReceived before if");
-    if (_wasVideoDisabled == false && _subscriberVideoOn == false) {
-        NSLog(@"DEBUG INFO: subscriberVideoDataReceived in if");
-        _subscriberVideoOn = true;
-        
-        [[NSNotificationCenter defaultCenter]
-         postNotificationName:@"onVideoEnabled"
-         object:nil
-         userInfo:@{@"sessionId": _sessionId}];
-        
-    }
-}
-
 
 - (void)subscriberVideoDisabled:(OTSubscriberKit *)subscriber reason:(OTSubscriberVideoEventReason)reason {
-    if (reason == OTSubscriberVideoEventPublisherPropertyChanged) {
-        _wasVideoDisabled = true;
-        
-        NSLog(@"DEBUG INFO: subscriberVideoDisabled :%i", reason);
-        [[NSNotificationCenter defaultCenter]
-         postNotificationName:@"onVideoDisabled"
-         object:nil
-         userInfo:@{@"sessionId": _sessionId, @"reason": @(reason)}];
-    }
-        
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onVideoDisabled"
+     object:nil
+     userInfo:@{@"sessionId": _sessionId, @"reason": @(reason)}];
 }
 
 @end
-
