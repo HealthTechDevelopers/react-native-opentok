@@ -24,6 +24,7 @@ RCT_EXPORT_MODULE();
              @"onSessionDidBeginReconnecting",
              @"onSessionDidReconnect",
              @"onVideoEnabled",
+             @"onPublishCameraError",
              @"onVideoDisabled"];
 }
 
