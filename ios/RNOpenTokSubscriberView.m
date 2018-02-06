@@ -75,6 +75,11 @@
     }
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    [_subscriber.view setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
+}
+
 - (void)attachSubscriberView {
     [_subscriber.view setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
     [self addSubview:_subscriber.view];
@@ -174,7 +179,7 @@
         // Suppress propagation of the event - we don't care about subscriber's changes
         return;
     }
-    
+
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onVideoDisabled"
      object:nil
@@ -182,3 +187,4 @@
 }
 
 @end
+

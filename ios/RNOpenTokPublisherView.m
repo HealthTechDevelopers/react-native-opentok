@@ -87,6 +87,11 @@
     [self cleanupPublisher];
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    [_publisher.view setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
+}
+
 - (void)attachPublisherView {
     [_publisher.view setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
     [self addSubview:_publisher.view];
@@ -143,3 +148,4 @@
 }
 
 @end
+
