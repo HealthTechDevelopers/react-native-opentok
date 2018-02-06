@@ -158,6 +158,11 @@
 }
 
 - (void)subscriberVideoEnabled:(OTSubscriberKit *)subscriber reason:(OTSubscriberVideoEventReason)reason {
+    if (subscriber.stream.hasVideo == NO && reason == OTSubscriberVideoEventSubscriberPropertyChanged) {
+        // Suppress propagation of the event - we don't care about subscriber's changes
+        return;
+    }
+
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onVideoEnabled"
      object:nil
@@ -165,10 +170,15 @@
 }
 
 - (void)subscriberVideoDisabled:(OTSubscriberKit *)subscriber reason:(OTSubscriberVideoEventReason)reason {
+    if (reason == OTSubscriberVideoEventSubscriberPropertyChanged) {
+        // Suppress propagation of the event - we don't care about subscriber's changes
+        return;
+    }
+    
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onVideoDisabled"
      object:nil
-     userInfo:@{@"sessionId": _sessionId, @"reason": @(reason)}];
+     userInfo:@{@"sessionId": _sessionId}];
 }
 
 @end
