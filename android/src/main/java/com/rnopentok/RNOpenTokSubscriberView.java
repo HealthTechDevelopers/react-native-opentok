@@ -83,11 +83,6 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
                 public void onStreamHasVideoChanged(Session session, Stream stream, boolean b) {
                   
                 }
-
-                @Override
-                public void onStreamHasVideoChanged(Session session, Stream stream, boolean b) {
-
-                }
                 
                 @Override
                 public void onStreamVideoDimensionsChanged(Session session, Stream stream, int i, int i1) {
