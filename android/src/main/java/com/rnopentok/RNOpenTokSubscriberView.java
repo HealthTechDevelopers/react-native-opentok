@@ -70,29 +70,36 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
                 BaseVideoRenderer.STYLE_VIDEO_FILL);
 
         Session session = RNOpenTokSessionManager.getSessionManager().getSession(mSessionId);
-        session.subscribe(mSubscriber);
+        if(session != null) {
+            session.subscribe(mSubscriber);
 
-        session.setStreamPropertiesListener(new Session.StreamPropertiesListener() {
-            @Override
-            public void onStreamHasAudioChanged(Session session, Stream stream, boolean b) {
+            session.setStreamPropertiesListener(new Session.StreamPropertiesListener() {
+                @Override
+                public void onStreamHasAudioChanged(Session session, Stream stream, boolean b) {
 
-            }
+                }
 
-            @Override
-            public void onStreamHasVideoChanged(Session session, Stream stream, boolean b) {
+                @Override
+                public void onStreamHasVideoChanged(Session session, Stream stream, boolean b) {
+                  
+                }
 
-            }
+                @Override
+                public void onStreamHasVideoChanged(Session session, Stream stream, boolean b) {
 
-            @Override
-            public void onStreamVideoDimensionsChanged(Session session, Stream stream, int i, int i1) {
+                }
+                
+                @Override
+                public void onStreamVideoDimensionsChanged(Session session, Stream stream, int i, int i1) {
 
-            }
+                }
 
-            @Override
-            public void onStreamVideoTypeChanged(Session session, Stream stream, Stream.StreamVideoType streamVideoType) {
+                @Override
+                public void onStreamVideoTypeChanged(Session session, Stream stream, Stream.StreamVideoType streamVideoType) {
 
-            }
-        });
+                }
+            });
+        }
 
         attachSubscriberView();
     }
