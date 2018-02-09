@@ -62,8 +62,8 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
         Session session = RNOpenTokSessionManager.getSessionManager().getSession(mSessionId);
         if(session != null) {
             session.publish(mPublisher);
+            attachPublisherView();
         }
-        attachPublisherView();
     }
 
     private void attachPublisherView() {
