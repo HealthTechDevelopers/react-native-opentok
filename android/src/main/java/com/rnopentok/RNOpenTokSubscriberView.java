@@ -99,9 +99,9 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
 
                 }
             });
-        }
 
-        attachSubscriberView();
+            attachSubscriberView();
+        }
     }
 
     private void attachSubscriberView() {
