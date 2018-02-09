@@ -60,8 +60,9 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
         mPublisher.setPublishVideo(mVideoEnabled);
 
         Session session = RNOpenTokSessionManager.getSessionManager().getSession(mSessionId);
-        session.publish(mPublisher);
-
+        if(session != null) {
+            session.publish(mPublisher);
+        }
         attachPublisherView();
     }
 
